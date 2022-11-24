@@ -27,7 +27,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="le7-tJ-64w">
                                             <rect key="frame" x="20" y="0.0" width="334.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -55,16 +55,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GF9-r8-lpq">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Rvh-Pb-cBf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="GF9-r8-lpq" firstAttribute="leading" secondItem="Rvh-Pb-cBf" secondAttribute="leading" id="I3H-wn-zvU"/>
-                            <constraint firstItem="GF9-r8-lpq" firstAttribute="centerY" secondItem="xWF-x9-z9c" secondAttribute="centerY" id="LDE-zZ-0Qd"/>
-                            <constraint firstItem="GF9-r8-lpq" firstAttribute="top" secondItem="xWF-x9-z9c" secondAttribute="topMargin" constant="-59" id="jn2-5O-wf4"/>
-                            <constraint firstItem="GF9-r8-lpq" firstAttribute="centerX" secondItem="xWF-x9-z9c" secondAttribute="centerX" id="pVn-VJ-BPS"/>
+                            <constraint firstItem="GF9-r8-lpq" firstAttribute="leading" secondItem="Rvh-Pb-cBf" secondAttribute="leading" id="2Ts-xj-E5L"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="GF9-r8-lpq" secondAttribute="bottom" constant="-34" id="CtR-bJ-GzS"/>
+                            <constraint firstItem="GF9-r8-lpq" firstAttribute="centerX" secondItem="xWF-x9-z9c" secondAttribute="centerX" id="UFM-dN-4D0"/>
+                            <constraint firstItem="GF9-r8-lpq" firstAttribute="top" secondItem="Rvh-Pb-cBf" secondAttribute="top" id="q60-LZ-Cg6"/>
                         </constraints>
                     </view>
                     <connections>

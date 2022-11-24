@@ -32,6 +32,8 @@ class ViewController: UITableViewController
             }
         }
         
+        pictures.sort()
+        
         print(pictures)
     }
     
@@ -55,6 +57,8 @@ class ViewController: UITableViewController
         {
             vc.selectedImage = pictures[indexPath.row]
             navigationController?.pushViewController(vc, animated: true)
+            vc.allPicturesCount = pictures.count
+            vc.selectedPictureIndex = indexPath.row
         }
     }
 }
