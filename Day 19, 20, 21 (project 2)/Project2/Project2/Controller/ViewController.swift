@@ -24,6 +24,8 @@ class ViewController: UIViewController
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Show Score", style: .done, target: self, action: #selector(showScore))
+        
         button1.layer.borderWidth = 1
         button2.layer.borderWidth = 1
         button3.layer.borderWidth = 1
@@ -37,6 +39,10 @@ class ViewController: UIViewController
 
     func askQuestion(action: UIAlertAction! = nil)
     {
+        button1.isEnabled = true
+        button2.isEnabled = true
+        button3.isEnabled = true
+        
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
         
@@ -44,9 +50,16 @@ class ViewController: UIViewController
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         
-        title = countries[correctAnswer].uppercased() + " (Score: \(score))"
+        title = countries[correctAnswer].uppercased()
         
         questionsAskedCount += 1
+    }
+    
+    func restartGame(action: UIAlertAction! = nil)
+    {
+        questionsAskedCount = 0
+        score = 0
+        askQuestion()
     }
     
     @IBAction func buttonTapped(_ sender: UIButton)
@@ -67,7 +80,8 @@ class ViewController: UIViewController
         if(questionsAskedCount == 10)
         {
             let ac = UIAlertController(title: title, message: "Your final score is \(score)", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            ac.addAction(UIAlertAction(title: "Restart", style: .default, handler: restartGame(action:)))
+            ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             present(ac, animated: true)
             
             button1.isEnabled = false
@@ -80,6 +94,13 @@ class ViewController: UIViewController
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion(action:)))
             present(ac, animated: true)
         }
+    }
+    
+    @objc func showScore()
+    {
+        let ac = UIAlertController(title: "Your score is \(score)", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .default))
+        present(ac, animated: true)
     }
 }
 

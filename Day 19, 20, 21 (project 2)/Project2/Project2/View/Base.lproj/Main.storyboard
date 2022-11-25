@@ -52,7 +52,9 @@
                             <constraint firstItem="ZCo-Bv-Cs0" firstAttribute="top" secondItem="lRR-FF-ieu" secondAttribute="bottom" constant="30" id="qb7-uQ-aOx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="4ab-Zn-NuE"/>
+                    <navigationItem key="navigationItem" id="4ab-Zn-NuE">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="8YA-t8-Ilc"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="button1" destination="lRR-FF-ieu" id="HdE-sN-QfB"/>
                         <outlet property="button2" destination="ZCo-Bv-Cs0" id="vA7-tH-8ch"/>
