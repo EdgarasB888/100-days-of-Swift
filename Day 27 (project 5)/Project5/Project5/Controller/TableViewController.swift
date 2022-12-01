@@ -18,6 +18,8 @@ class TableViewController: UITableViewController
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "restart.circle"), style: .plain, target: self, action: #selector(startGame))
+        
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt")
         {
             if let startWords = try? String(contentsOf: startWordsURL)
@@ -34,7 +36,7 @@ class TableViewController: UITableViewController
         startGame()
     }
     
-    func startGame()
+    @objc func startGame()
     {
         title = allWords.randomElement()
         usedWords.removeAll(keepingCapacity: true)
@@ -75,43 +77,40 @@ class TableViewController: UITableViewController
     {
         let lowerAnswer = answer.lowercased()
         
-        let errorTitle: String
-        let errorMessage: String
-        
-        if(isPossible(word: lowerAnswer))
+        if(!isSame(word: lowerAnswer))
         {
-            if isOriginal(word: lowerAnswer)
+            if(isPossible(word: lowerAnswer))
             {
-                if(isReal(word: lowerAnswer))
+                if isOriginal(word: lowerAnswer)
                 {
-                    usedWords.insert(answer, at: 0)
-                    
-                    let indexPath = IndexPath(row: 0, section: 0)
-                    tableView.insertRows(at: [indexPath], with: .automatic)
-                    
-                    return
+                    if(isReal(word: lowerAnswer))
+                    {
+                        usedWords.insert(answer, at: 0)
+                        
+                        let indexPath = IndexPath(row: 0, section: 0)
+                        tableView.insertRows(at: [indexPath], with: .automatic)
+                        
+                        return
+                    }
+                    else
+                    {
+                        showErrorMessage(errorTitle: "Word not recognized or less than 3 letters", errorMessage: "You can't just make them up, you know!")
+                    }
                 }
                 else
                 {
-                    errorTitle = "Word not recognized"
-                    errorMessage = "You can't just make them up, you know!"
+                    showErrorMessage(errorTitle: "Word already used", errorMessage: "Be more original!")
                 }
             }
             else
             {
-                errorTitle = "Word already used"
-                errorMessage = "Be more original!"
+                showErrorMessage(errorTitle: "Word not possible", errorMessage: "You can't spell that word from \(title!.lowercased()).")
             }
         }
         else
         {
-            errorTitle = "Word not possible"
-            errorMessage = "You can't spell that word from \(title!.lowercased())."
+            showErrorMessage(errorTitle: "Word is the same", errorMessage: "You can't use the same orginal word!")
         }
-        
-        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
-        present(ac, animated: true)
     }
     
     func isPossible(word: String) -> Bool
@@ -145,7 +144,19 @@ class TableViewController: UITableViewController
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         
         //NSNotFound tells us whether a word was spelled correctly
-        return misspelledRange.location == NSNotFound
+        return misspelledRange.location == NSNotFound && word.count >= 3
+    }
+    
+    func isSame(word: String) -> Bool
+    {
+        return word == title
+    }
+    
+    func showErrorMessage(errorTitle: String, errorMessage: String)
+    {
+        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
 }
 
