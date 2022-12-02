@@ -10,6 +10,8 @@ import UIKit
 class TableViewController: UITableViewController
 {
     var petitions = [Petition]()
+    var filteredPetitions = [Petition]()
+    var petitionsToRestore = [Petition]()
     
     override func viewDidLoad()
     {
@@ -38,8 +40,8 @@ class TableViewController: UITableViewController
                 
                 return
             }
+            showError()
         }
-        showError()
     }
     
     func showError()
@@ -107,11 +109,40 @@ class TableViewController: UITableViewController
         let addActionButton = UIAlertAction(title: "Filter", style: .default)
         {
             action in
-            let textField = ac.textFields?.first
+            guard let textFieldText = ac.textFields?.first?.text else { return }
             
+            self.filteredPetitions.removeAll()
+            
+            
+            for petition in self.petitions
+            {
+                if petition.title.lowercased().contains(textFieldText.lowercased()) || petition.body.lowercased().contains(textFieldText.lowercased())
+                {
+                    self.filteredPetitions.append(petition)
+                }
+            }
+            
+            self.petitionsToRestore = self.petitions
+            self.petitions = self.filteredPetitions
+            
+            self.tableView.reloadData()
         }
-        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let cancelButton = UIAlertAction(title: "Restore", style: .cancel)
+        {
+            action in
+            self.restorePetitions()
+        }
+        
+        ac.addAction(addActionButton)
+        ac.addAction(cancelButton)
+        
+        present(ac, animated: true)
     }
     
+    func restorePetitions()
+    {
+        petitions = petitionsToRestore
+        tableView.reloadData()
+    }
 }
 
