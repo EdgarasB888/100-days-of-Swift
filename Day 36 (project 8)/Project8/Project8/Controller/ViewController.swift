@@ -26,6 +26,7 @@ class ViewController: UIViewController
         }
     }
     var level = 1
+    var correctAnswers = 0
     
     override func loadView()
     {
@@ -85,13 +86,20 @@ class ViewController: UIViewController
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             
+            // pin the top of the clues label to the bottom of the score label
             cluesLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
+            // pin the leading edge of the clues label to the leading edge of our layout margins, adding 100 for some space
             cluesLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 100),
+            // make the clues label 60% of the width of our layout margins, minus 100
             cluesLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: -100),
             
+            // also pin the top of the answers label to the bottom of the score label
             answersLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
+            // make the answers label stick to the trailing edge of our layout margins, minus 100
             answersLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -100),
+            // make the answers label take up 40% of the available space, minus 100
             answersLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: -100),
+            // make the answers label match the height of the clues label
             answersLabel.heightAnchor.constraint(equalTo: cluesLabel.heightAnchor),
             
             currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -116,6 +124,7 @@ class ViewController: UIViewController
         let width = 150
         let height = 80
         
+        // create 20 buttons as a 4x5 grid
         for row in 0..<4
         {
             for column in 0..<5
@@ -127,6 +136,9 @@ class ViewController: UIViewController
                 
                 let frame = CGRect(x: column * width, y: row * height, width: width, height: height)
                 letterButton.frame = frame
+                
+                letterButton.layer.borderWidth = 1
+                letterButton.layer.borderColor = UIColor.lightGray.cgColor
                 
                 buttonsView.addSubview(letterButton)
                 letterButtons.append(letterButton)
@@ -170,13 +182,18 @@ class ViewController: UIViewController
             
             currentAnswer.text = ""
             score += 1
+            correctAnswers += 1
             
-            if score % 7 == 0
+            if correctAnswers == 7
             {
-                let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
-                present(ac, animated: true)
+                showAlertController(title: "Well done!", message: "Are you ready for the next level?")
             }
+        }
+        else
+        {
+            showAlertController(title: "Wrong!", message: "Please check your answer and try again!")
+            clearTapped(sender)
+            score -= 1
         }
     }
     
@@ -248,6 +265,13 @@ class ViewController: UIViewController
                 letterButtons[i].setTitle(letterBits[i], for: .normal)
             }
         }
+    }
+    
+    func showAlertController(title: String, message: String)
+    {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+        present(ac, animated: true)
     }
 }
 
