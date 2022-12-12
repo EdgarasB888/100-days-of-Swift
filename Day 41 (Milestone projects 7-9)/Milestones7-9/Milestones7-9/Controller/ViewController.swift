@@ -14,8 +14,8 @@ class ViewController: UIViewController
     @IBOutlet var allButtons: [UIButton]!
     
     var englishAlphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-    //var wordsToGuess = ["dog", "cat", "mouse", "letter", "house", "vehicle", "microwave"]
-    var wordsToGuess = ["dog"]
+    var wordsToGuess = ["dog", "cat", "mouse", "letter", "house", "vehicle", "microwave"]
+    //var wordsToGuess = ["dog"]
     
     /*
     var wordsToGuess =
@@ -48,19 +48,19 @@ class ViewController: UIViewController
         pickWord()
     }
     
-    func setupButtons()
-    {
+    func setupButtons() {
         englishAlphabet.shuffle()
         
         var buttonIndex = 0
-        for button in allButtons
-        {
+        for button in allButtons {
             button.setTitle(englishAlphabet[buttonIndex].uppercased(), for: .normal)
             button.isHidden = false
             button.isEnabled = true
             
             buttonIndex += 1
         }
+        
+        self.view.layoutIfNeeded()
     }
     
     func pickWord()
@@ -107,8 +107,7 @@ class ViewController: UIViewController
         stepsTillDeath = 11
         score = 0
         
-        //wordsToGuess = ["dog", "cat", "mouse", "letter", "house", "vehicle", "microwave"]
-        wordsToGuess = ["dog", "cat", "cow"]
+        wordsToGuess = ["dog", "cat", "mouse", "letter", "house", "vehicle", "microwave"]
         
         pickWord()
         setupButtons()
