@@ -56,6 +56,8 @@ class ViewController: UIViewController
             button.setTitle(englishAlphabet[buttonIndex].uppercased(), for: .normal)
             button.isHidden = false
             button.isEnabled = true
+            button.titleLabel?.font = UIFont(name: "Marker Felt", size: 18)
+            button.titleLabel?.tintColor = .black
             
             buttonIndex += 1
         }
